@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <nav id="navbar">
+        <header>
+            <h2 class="text-center">Discord.js Documentation</h2>
+        </header>
+        <div class="nav-links">
+            <a class="nav-link" href="#About">About</a>
+            <a class="nav-link" href="#Installation">Installation</a>
+            <a class="nav-link" href="#Optional_packages">Optional packages</a>
+            <a class="nav-link" href="#Example_usage">Example usage</a>
+            <a class="nav-link" href="#Statistics">Statistics</a>
+            <a class="nav-link" href="#Contributing">Contributing</a>
+            <a class="nav-link" href="#Help">Help</a>
+            <a class="nav-link" href="#Reference">Reference</a>
+        </div>
+    </nav>
+    <main id="main-doc">
+        <section class="main-section" id="About">
+            <header>
+                <h2>About</h2>
+            </header>
+            <p>
+                discord.js is a powerful Node.js  module that allows you to interact with the Discord API  very easily. It takes a much more object-oriented approach than most other JS Discord libraries, making your bot's code significantly tidier and easier to comprehend.
+            </p>
+            <p>
+                Usability, consistency, and performance are key focuses of discord.js, and it also has nearly 100% coverage of the Discord API. It receives new Discord features shortly after they arrive in the API.
+            </p>
+            <p><b>Why use Discord.js?</b></p>
+            <ul>
+                <li>Object-oriented</li>
+                <li>Predictable abstractions</li>
+                <li>Performant</li>
+                <li>100% coverage of the Discord API</li>
+            </ul>
+        </section>
+        <section class="main-section" id="Installation">
+            <header>
+                <h2>Installation</h2>
+            </header>
+            <p>Node.js 16.6.0 or newer is required.</p>
+            <code>
+          <pre>
+    npm install discord.js
+    yarn add discord.js
+    pnpm add discord.js
+          </pre>
+        </code>
+        </section>
+        <section class="main-section" id="Optional_packages">
+            <header>
+                <h2>Optional packages</h2>
+            </header>
+            <ul>
+                <li>
+                    zlib-sync for WebSocket data compression and inflation (<code>npm install zlib-sync</code>)
+                </li>
+                <li>
+                    erlpack for significantly faster WebSocket data (de)serialisation (
+                    <code>npm install discord/erlpack</code> )
+                </li>
+                <li>
+                    bufferutil for a much faster WebSocket connection (
+                    <code>npm install bufferutil</code> )
+                </li>
+                <li>
+                    utf-8-validate in combination with <code>bufferutil</code> for much
+                    faster WebSocket processing (
+                    <code>npm install utf-8-validate</code> )
+                </li>
+                <li>@discordjs/voice for interacting with the Discord Voice API</li>
+            </ul>
+        </section>
+        <section class="main-section" id="Example_usage">
+            <header>
+                <h2>Example usage</h2>
+            </header>
+            <p>Install all required dependencies:</p>
+            <code>
+                <pre>
+    npm install discord.js @discordjs/rest discord-api-types
+    yarn add discord.js @discordjs/rest discord-api-types
+    pnpm add discord.js @discordjs/rest discord-api-types
+                </pre>
+            </code>
+            <p>Register a slash command against the Discord API:</p>
+            <code>
+          <pre>
+    const { REST } = require('@discordjs/rest');
+    const { Routes } = require('discord-api-types/v9');
+    
+    const commands = [{
+      name: 'ping',
+      description: 'Replies with Pong!'
+    }]; 
+    
+    const rest = new REST({ version: '9' }).setToken('token');
+    
+    (async () => {
+      try {
+        console.log('Started refreshing application (/) commands.');
+    
+        await rest.put(
+          Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
+          { body: commands },
+        );
+    
+        console.log('Successfully reloaded application (/) commands.');
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+          </pre>
+        </code>
+            <p>Afterwards we can create a quite simple example bot:</p>
+            <code>
+          <pre>
+    const { Client, Intents } = require('discord.js');
+    const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+    
+    client.on('ready', () => {
+      console.log(`Logged in as ${client.user.tag}!`);
+    });
+    
+    client.on('interactionCreate', async interaction => {
+      if (!interaction.isCommand()) return;
+    
+      if (interaction.commandName === 'ping') {
+        await interaction.reply('Pong!');
+      }
+    });
+    
+    client.login('token');
+          </pre>
+        </code>
+        </section>
+        <section class="main-section" id="Statistics">
+            <header>
+                <h2>Statistics</h2>
+            </header>
+            <ul>
+                <li>238,305,263+ downloads</li>
+                <li>16,401+ stars</li>
+                <li>100+ contributors</li>
+            </ul>
+            <p>... and growing!</p>
+        </section>
+        <section class="main-section" id="Contributing">
+            <header>
+                <h2>Contributing</h2>
+            </header>
+            <p>
+                Before creating an issue, please ensure that it hasn't already been
+                reported/suggested, and double-check the documentation.
+            </p>
+            <p>See the contribution guide if you'd like to submit a PR.</p>
+        </section>
+        <section class="main-section" id="Help">
+            <header>
+                <h2>Help</h2>
+            </header>
+            <p>
+                If you don't understand something in the documentation, you are
+                experiencing problems, or you just need a gentle nudge in the right
+                direction, please don't hesitate to join our official discord.js
+                Server .
+            </p>
+        </section>
+        <section class="main-section" id="Reference">
+            <header>
+                <h2>Reference</h2>
+            </header>
+            <ul>
+                <li>
+                    All the documentation in this page is taken from
+                    <a href="https://discord.js.org/#/docs/main/stable/general/welcome">Discord.js</a>
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+
+</html>
